@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 use Inertia\Response;
+use Illuminate\Http\Response as HttpResponse; // Usa el alias HttpResponse
 
 class RegisteredUserController extends Controller
 {
@@ -47,5 +48,35 @@ class RegisteredUserController extends Controller
         Auth::login($user);
 
         return to_route('dashboard');
+    }
+
+    /**
+     * Handle an incoming registration request for API.
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function storeApi(Request $request): HttpResponse // Usa el alias HttpResponse
+    {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ]);
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+
+        event(new Registered($user));
+
+        // Crea un token para el usuario recién registrado
+        $token = $user->createToken($request->deviceName ?? 'default_device')->plainTextToken;
+
+        return response([
+            'user' => $user,
+            'token' => $token,
+        ], 201); // 201 Created
     }
 }

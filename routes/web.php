@@ -7,6 +7,10 @@ Route::get('/', function () {
     return Inertia::render('welcome');
 })->name('home');
 
+Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
+    Route::resource('users', App\Http\Controllers\Admin\UserController::class);
+});
+
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
         return Inertia::render('dashboard');
