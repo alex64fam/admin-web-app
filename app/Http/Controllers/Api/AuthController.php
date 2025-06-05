@@ -20,6 +20,11 @@ class AuthController extends Controller
         }
 
         return response()->json([
+            'user' => [
+                'id' => $request->user()->id,
+                'name' => $request->user()->name,
+                'email' => $request->user()->email,
+            ],
             'token' => $request->user()->createToken('flutter-token')->plainTextToken,
         ]);
     }

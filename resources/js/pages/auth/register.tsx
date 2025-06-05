@@ -1,4 +1,4 @@
-import { Head, useForm } from '@inertiajs/react';
+import { Head, router, useForm, usePage } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
 import { FormEventHandler } from 'react';
 
@@ -17,6 +17,7 @@ type RegisterForm = {
 };
 
 export default function Register() {
+    const { props } = usePage();
     const { data, setData, post, processing, errors, reset } = useForm<Required<RegisterForm>>({
         name: '',
         email: '',
@@ -26,7 +27,7 @@ export default function Register() {
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
-        post(route('register'), {
+        router.post(route('register'), {}, {
             onFinish: () => reset('password', 'password_confirmation'),
         });
     };
@@ -108,9 +109,9 @@ export default function Register() {
                 </div>
 
                 <div className="text-muted-foreground text-center text-sm">
-                    Already have an account?{' '}
+                    ¿Ya tienes una pinche cuenta?{' '}
                     <TextLink href={route('login')} tabIndex={6}>
-                        Log in
+                        Iniciar Sesión
                     </TextLink>
                 </div>
             </form>
