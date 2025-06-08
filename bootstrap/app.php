@@ -18,16 +18,16 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
         web: __DIR__.'/../routes/web.php',
         commands: __DIR__.'/../routes/console.php',
-        //api: __DIR__.'/../routes/api.php',
+        api: __DIR__.'/../routes/api.php',
         //health: '/up',
-        /*then: function () {
+        then: function () {
             Route::middleware(['api', 'auth:sanctum'])
                 ->prefix('api/v1')
                 ->group(base_path('routes/api.php'));
 
             Route::middleware(['web'])
                 ->group(base_path('routes/web.php'));
-        }*/
+        }
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->encryptCookies(except: ['appearance', 'sidebar_state']);
@@ -47,7 +47,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->api(prepend: [
             \Illuminate\Http\Middleware\HandleCors::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-            \Illuminate\Routing\Middleware\ThrottleRequests::class . ':api',
+            //\Illuminate\Routing\Middleware\ThrottleRequests::class . ':api',
             \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
         ]);
     })

@@ -9,6 +9,7 @@ Route::get('/', function () {
 
 Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
     Route::resource('users', App\Http\Controllers\Admin\UserController::class);
+    Route::resource('role', App\Http\Controllers\Admin\RoleController::class);
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {

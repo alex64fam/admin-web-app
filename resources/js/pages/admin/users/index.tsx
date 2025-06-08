@@ -5,7 +5,7 @@ import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
 import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
-import { Head, router } from '@inertiajs/react';
+import { Head, router, usePage } from '@inertiajs/react';
 import { User } from 'lucide-react';
 import { useMemo, useState } from 'react';
 
@@ -32,6 +32,7 @@ interface UsersTableProps {
 }
 
 export default function UsersTable({ users }: UsersTableProps) {
+    const { props } = usePage();
     const [searchTerm, setSearchTerm] = useState('');
     const filteredUsers = useMemo(() => {
         if (!searchTerm) {
@@ -48,7 +49,7 @@ export default function UsersTable({ users }: UsersTableProps) {
 
     const handleDeleteUser = (userId: number) => {
         router.delete(route('admin.users.destroy', userId), {
-            onSuccess: () => {
+            onSuccess: (result) => {
                 console.log("Usuario eliminado con éxito");
             },
             onError: () => {
@@ -56,6 +57,10 @@ export default function UsersTable({ users }: UsersTableProps) {
             },
             preserveScroll: true,
         });
+    }
+
+    if (props.alert) {
+        console.log(props);
     }
 
     return (
