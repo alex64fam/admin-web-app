@@ -17,9 +17,10 @@ export interface NavGroup {
 
 export interface NavItem {
     title: string;
-    href: string;
+    href?: string;
     icon?: LucideIcon | null;
     isActive?: boolean;
+    children?: NavItem[];
 }
 
 export interface SharedData {
@@ -31,12 +32,47 @@ export interface SharedData {
     [key: string]: unknown;
 }
 
+export interface Gender {
+    id: number;
+    key: string;
+    name: string;
+    created_at: string;
+    updated_at: string;
+    [key: string]: unknown; // This allows for additional properties...
+}
+
+export interface Role {
+    role: string;
+    is_active: boolean;
+    description: string;
+    created_at: string;
+    updated_at: string;
+    pivot?: {
+        role_id: number;
+        user_id: number;
+        created_at: string;
+        updated_at: string;
+    }
+    [key: string]: unknown; // This allows for additional properties...
+}
+
 export interface User {
     id: number;
     name: string;
+    username: string;
+    gender: Gender | null;
     email: string;
+    phone?: string;
+    address?: string;
+    city?: string;
+    state?: string;
+    country?: string;
+    zip?: string;
+    birthday?: string;
     avatar?: string;
+    is_active: boolean;
     email_verified_at: string | null;
+    roles: Roles[];
     created_at: string;
     updated_at: string;
     [key: string]: unknown; // This allows for additional properties...

@@ -14,7 +14,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::with('gender.translations')->get();
+        $users = User::with('gender', 'roles')->get();
         return Inertia::render('admin/users/index', ['users' => $users]);
     }
 

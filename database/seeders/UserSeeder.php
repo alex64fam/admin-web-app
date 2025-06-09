@@ -15,7 +15,7 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        User::create([
+        $user = User::create([
             'name' => 'Alexis Yadir',
             'last_name' => 'Alvarado Sanabria',
             'username' => 'alex64fam',
@@ -32,5 +32,7 @@ class UserSeeder extends Seeder
             'description' => 'Desarrollador de la aplicación.',
             'password' => bcrypt('Mitziwashere97'),
         ]);
+
+        $user->assignRole('root');
     }
 }
