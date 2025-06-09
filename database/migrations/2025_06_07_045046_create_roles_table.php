@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('roles', function (Blueprint $table) {
             $table->id();
             $table->string('role'); //admin, user, moderator, etc.
-            $table->string('status'); //active, inactive, banned, etc.
+            $table->boolean('is_active')->default(true);
             $table->string('description'); //description of the role
             $table->timestamps();
             $table->softDeletes();

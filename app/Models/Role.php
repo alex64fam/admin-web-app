@@ -13,7 +13,7 @@ class Role extends Model
 
     protected $filterable = [
         'role',
-        'status',
+        'is_active',
         'description',
     ];
 

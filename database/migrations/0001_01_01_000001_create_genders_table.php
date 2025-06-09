@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('couples', function (Blueprint $table) {
+        Schema::create('genders', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id_1');
-            $table->foreign('user_id_1')->references('id')->on('users');
-            $table->unsignedBigInteger('user_id_2');
-            $table->foreign('user_id_2')->references('id')->on('users');
+            $table->string('key'); // Male, Female, Other
+            $table->boolean('is_active')->default(true);
+            $table->string('description');
             $table->timestamps();
         });
     }
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('couples');
+        Schema::dropIfExists('genders');
     }
 };

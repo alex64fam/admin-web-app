@@ -16,9 +16,16 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
+interface Gender {
+    id: number;
+    key: string;
+    name: string;
+}
+
 interface User {
     id: number;
     name: string;
+    gender: Gender | null;
     email: string;
     created_at: string;
 }
@@ -80,6 +87,7 @@ export default function UsersTable({ users }: UsersTableProps) {
                         <TableRow>
                             <TableHead>ID</TableHead>
                             <TableHead>Nombre</TableHead>
+                            <TableHead>Sexo</TableHead>
                             <TableHead>Email</TableHead>
                             <TableHead>Creado</TableHead>
                             <TableHead className="text-right">Acciones</TableHead>
@@ -91,6 +99,7 @@ export default function UsersTable({ users }: UsersTableProps) {
                         <TableRow key={user.id}>
                             <TableCell className="font-medium">{user.id}</TableCell>
                             <TableCell>{user.name}</TableCell>
+                            <TableCell>{user.gender ? user.gender.name : 'N/A'}</TableCell>
                             <TableCell>{user.email}</TableCell>
                             <TableCell>{new Date(user.created_at).toLocaleDateString()}</TableCell>
                             <TableCell className="text-right">
