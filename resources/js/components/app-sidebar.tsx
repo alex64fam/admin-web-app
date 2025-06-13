@@ -4,7 +4,7 @@ import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { NavGroup, type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
-import { BookOpen, Folder, LayoutGrid, User, UserCheck2Icon } from 'lucide-react';
+import { BookOpen, Dog, Folder, LayoutGrid, LucideMessageCircleDashed, LucideScrollText, Ruler, Store, ToyBrickIcon, User, UserCheck2Icon, UsersRoundIcon, WalletCards } from 'lucide-react';
 import AppLogo from './app-logo';
 
 const mainNavItems: NavItem[] = [
@@ -14,12 +14,37 @@ const mainNavItems: NavItem[] = [
         icon: LayoutGrid,
     },
     {
-        title: 'Sistema',
+        title: 'Usuarios',
         children: [
             {
-                title: 'Usuarios',
-                href: '/admin/users',
+                title: 'Usuarios de aplicación',
+                href: '/admin/allUsers',
                 icon: User,
+            },
+            {
+                title: 'Parejas',
+                href: '/admin/relationships',
+                icon: UsersRoundIcon,
+            },
+            {
+                title: 'Mascotas',
+                href: '/admin/pets',
+                icon: Dog,
+            },
+            {
+                title: 'Pertenencias',
+                href: '/admin/clothes',
+                icon: ToyBrickIcon,
+            }
+        ]
+    },
+    {
+        title: 'Tienda',
+        children: [
+            {
+                title: 'Productos',
+                href: '/admin/products',
+                icon: Store,
             }
         ]
     },
@@ -27,12 +52,37 @@ const mainNavItems: NavItem[] = [
         title: 'Catálogos',
         children: [
             {
+                title: 'Idiomas',
+                href: '/admin/languages',
+                icon: LucideMessageCircleDashed,
+            },
+            {
+                title: 'Generos',
+                href: '/admin/genders',
+                icon: LucideScrollText,
+            }
+        ]
+    },
+    {
+        title: 'Sistema',
+        children: [
+            {
+                title: 'Administradores',
+                href: '/admin/users',
+                icon: User,
+            },
+            {
                 title: 'Roles',
                 href: '/admin/roles',
                 icon: UserCheck2Icon,
+            },
+            {
+                title: 'Permisos',
+                href: '/admin/permissions',
+                icon: Ruler,
             }
         ]
-    }
+    },
 ];
 
 const footerNavItems: NavItem[] = [

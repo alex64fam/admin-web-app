@@ -22,7 +22,7 @@ export function NavMain({ items = [] }: { items: NavItem[] }) {
                                 onOpenChange={setIsOpen}
                                 className='group/collapsible'
                             >
-                                <SidebarGroup>
+                                <SidebarGroup className='p-0'>
                                     <SidebarGroupLabel asChild>
                                         <CollapsibleTrigger>
                                             {item.title}
