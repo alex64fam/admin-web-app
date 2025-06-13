@@ -1,45 +1,60 @@
-// resources/js/Components/GenderCreateForm.tsx
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
-import { Checkbox } from '@/components/ui/checkbox'; // Para el campo is_active
-import { Textarea } from '@/components/ui/textarea'; // Para el campo description
-import { useForm, router } from '@inertiajs/react'; // Importamos 'router' para recargar la página si es necesario
-import { Language } from '@/types'; // Asegúrate de que tu interfaz Language esté definida en types.d.ts
-import { toast } from 'sonner'; // Para mostrar notificaciones (toasts) de éxito/error
+import { Checkbox } from '@/components/ui/checkbox';
+import { Textarea } from '@/components/ui/textarea';
+import { useForm, router } from '@inertiajs/react';
+import { Gender, Language, GenderTranslation } from '@/types';
+import { toast } from 'sonner'; // Usamos sonner directamente
 
-interface GenderCreateFormProps {
+interface GenderEditFormProps {
     onClose: () => void;
+    gender: Gender;
     activeLanguages: Language[];
 }
 
-export default function GenderCreateForm({ onClose, activeLanguages }: GenderCreateFormProps) {
+export default function GenderEditForm({ onClose, gender, activeLanguages }: GenderEditFormProps) {
     const initialNames: { [key: string]: string } = {};
     activeLanguages.forEach(lang => {
-        initialNames[lang.code] = '';
+        const existingTranslation = gender.translations?.find((t: GenderTranslation) => t.locale === lang.code);
+        initialNames[lang.code] = existingTranslation ? existingTranslation.name : '';
     });
 
-    const { data, setData, post, processing, errors, reset } = useForm({
-        key: '',
-        is_active: true,
-        description: '',
+    const { data, setData, put, processing, errors, reset } = useForm({
+        key: gender.key,
+        is_active: gender.is_active,
+        description: gender.description || '',
         names: initialNames,
     });
 
+    useEffect(() => {
+        const newInitialNames: { [key: string]: string } = {};
+        activeLanguages.forEach(lang => {
+            const existingTranslation = gender.translations?.find((t: GenderTranslation) => t.locale === lang.code);
+            newInitialNames[lang.code] = existingTranslation ? existingTranslation.name : '';
+        });
+
+        setData({
+            key: gender.key,
+            is_active: gender.is_active,
+            description: gender.description || '',
+            names: newInitialNames,
+        });
+    }, [gender, activeLanguages]);
+
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        post(route('admin.genders.store'), {
+        put(route('admin.genders.update', gender.id), {
             onSuccess: () => {
-                toast.success('Género creado', {
-                    description: 'El nuevo género ha sido añadido exitosamente.',
+                toast.success('Género actualizado', {
+                    description: 'El género ha sido modificado exitosamente.',
                 });
                 onClose();
-                reset();
                 router.reload({ only: ['genders'] });
             },
             onError: (validationErrors) => {
-                toast.error('Error al crear género', {
+                toast.error('Error al actualizar género', {
                     description: 'Por favor, revisa los campos e intenta de nuevo.',
                 });
                 console.error('Errores de validación:', validationErrors);
@@ -74,7 +89,7 @@ export default function GenderCreateForm({ onClose, activeLanguages }: GenderCre
             </div>
 
             {/* Campos 'name' dinámicos por idioma */}
-            <h3 className="text-lg font-semibold pt-4 pb-2">Nombres por Idioma</h3> {/* Espaciado para el título */}
+            <h3 className="text-lg font-semibold pt-4 pb-2">Nombres por Idioma</h3>
             {activeLanguages.map(lang => (
                 <div key={lang.code} className="space-y-2"> {/* Apila label e input verticalmente para cada idioma */}
                     <Label htmlFor={`name-${lang.code}`}>Nombre ({lang.name})</Label>
@@ -90,7 +105,7 @@ export default function GenderCreateForm({ onClose, activeLanguages }: GenderCre
                 </div>
             ))}
 
-            {/* Campo 'is_active' (Activo) */}
+            {/* Campo 'is_active' */}
             <div className="flex items-center space-x-2 pt-4"> {/* Diseño simple para el checkbox */}
                 <Checkbox
                     id="is_active"
@@ -109,7 +124,7 @@ export default function GenderCreateForm({ onClose, activeLanguages }: GenderCre
                     Cancelar
                 </Button>
                 <Button type="submit" disabled={processing}>
-                    {processing ? 'Guardando...' : 'Guardar'}
+                    {processing ? 'Actualizando...' : 'Actualizar'}
                 </Button>
             </div>
         </form>

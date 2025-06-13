@@ -32,12 +32,25 @@ export interface SharedData {
     [key: string]: unknown;
 }
 
-export interface Gender {
+export interface GenderTranslation {
     id: number;
-    key: string;
+    gender_id: number;
+    locale: string;
     name: string;
     created_at: string;
     updated_at: string;
+    [key: string]: unknown; // This allows for additional properties...
+}
+
+export interface Gender {
+    id: number;
+    key: string;
+    is_active: boolean;
+    name: string;
+    description: string;
+    created_at: string;
+    updated_at: string;
+    translations: GenderTranslation[];
     [key: string]: unknown; // This allows for additional properties...
 }
 
@@ -81,6 +94,7 @@ export interface User {
 export interface Language {
     id: number;
     code: string;
+    name: string;
     is_active: boolean;
     created_at: string;
     updated_at: string;
