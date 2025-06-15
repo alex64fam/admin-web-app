@@ -25,14 +25,6 @@ class GenderController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
@@ -49,10 +41,12 @@ class GenderController extends Controller
         $gender = Gender::create($request->all());
 
         foreach ($request->names as $locale => $name) {
-            $gender->translations()->create([
-                'locale' => $locale,
-                'name' => $name
-            ]);
+            if ($name !== null) {
+                $gender->translations()->create([
+                    'locale' => $locale,
+                    'name' => $name
+                ]);
+            }
         }
 
         return redirect()->route('admin.genders.index')->with('success', 'Género creado con éxito.');
@@ -67,9 +61,9 @@ class GenderController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Update the specified resource in storage.
      */
-    public function edit(Request $request, Gender $gender)
+    public function update(Request $request, Gender $gender)
     {
         $rules = [
             'key' => ['required', 'string', 'max:255', Rule::unique('genders', 'key')->ignore($gender->id)],
@@ -83,21 +77,17 @@ class GenderController extends Controller
         $gender->update($request->all());
         
         foreach ($request->names as $locale => $name) {
-            $gender->translations()->updateOrCreate([
-                'locale' => $locale,
-                'name' => $name
-            ]);
+            if ($name !== null) {
+                $gender->translations()->updateOrCreate([
+                    'locale' => $locale,
+                    'name' => $name
+                ]);
+            } else {
+                $gender->translations()->where('locale', $locale)->delete();
+            }
         }
 
         return redirect()->route('admin.genders.index')->with('success', 'Género actualizado con éxito.');
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
     }
 
     /**

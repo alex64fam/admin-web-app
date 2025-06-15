@@ -12,6 +12,7 @@ import React from "react";
 import GenderCreateForm from "./create";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import GenderEditForm from "./edit";
+import { Badge } from "@/components/ui/badge";
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -79,11 +80,33 @@ export default function GendersTable({ genders, activeLanguages }: GendersTableP
         },
         {
             accessorKey: 'key',
-            header: 'Código'
+            header: 'Clave'
         },
         {
             accessorKey: 'name',
             header: 'Nombre'
+        },
+        {
+            accessorKey: 'is_active',
+            header: 'Activo',
+            cell: ({ row }) => {
+                const isActive = row.original.is_active;
+                return (
+                    <>
+                        {isActive ? (
+                            <Badge
+                                className="bg-green-500 h-4 min-w-4 rounded-full px-01 font-mono tabular-nums"
+                                variant="secondary"
+                            />
+                        ) : (
+                            <Badge
+                                className="bg-red-500 h-4 min-w-4 rounded-full px-1 font-mono tabular-nums"
+                                variant="destructive"
+                            />
+                        )}
+                    </>
+                );
+            }
         },
         {
             accessorKey: 'created_at',
@@ -95,6 +118,7 @@ export default function GendersTable({ genders, activeLanguages }: GendersTableP
         },
         {
             id: 'actions',
+            header: 'Acciones',
             cell: ({ row }) => {
                 const gender = row.original;
                 return (

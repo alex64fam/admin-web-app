@@ -1,4 +1,5 @@
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { DataTable } from "@/components/ui/DataTable";
@@ -8,6 +9,7 @@ import { BreadcrumbItem, Language } from "@/types";
 import { Head, router } from "@inertiajs/react";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MenuSquare } from "lucide-react";
+import { useState } from "react";
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -25,6 +27,10 @@ interface LanguagesTableProps {
 }
 
 export default function languagesTable({ languages }: LanguagesTableProps) {
+    const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    const [editingLanguage, setEditingLanguage] = useState<Language | null>(null);
+
     const handleDeleteLanguage = (languageId: number) => {
         router.delete(route('admin.languages.destroy', languageId), {
             onSuccess: () => {
@@ -35,6 +41,20 @@ export default function languagesTable({ languages }: LanguagesTableProps) {
                 console.log('Error al eliminar el genero');
             }
         });
+    };
+
+    const handleCreateLanguage = () => {
+        setIsCreateModalOpen(true);
+    };
+
+    const handleEditLanguage = (language: Language) => {
+        setEditingLanguage(language);
+        setIsEditModalOpen(true);
+    };
+
+    const handleCloseEditModal = () => {
+        setIsEditModalOpen(false);
+        setEditingLanguage(null);
     };
 
     const columns: ColumnDef<Language>[] = [
@@ -59,6 +79,28 @@ export default function languagesTable({ languages }: LanguagesTableProps) {
         {
             accessorKey: 'code',
             header: 'Codigo'
+        },
+        {
+            accessorKey: 'is_active',
+            header: 'Activo',
+            cell: ({ row }) => {
+                const isActive = row.original.is_active;
+                return (
+                    <>
+                        {isActive ? (
+                            <Badge
+                                className="bg-green-500 h-4 min-w-4 rounded-full px-01 font-mono tabular-nums"
+                                variant="secondary"
+                            />
+                        ) : (
+                            <Badge
+                                className="bg-red-500 h-4 min-w-4 rounded-full px-1 font-mono tabular-nums"
+                                variant="destructive"
+                            />
+                        )}
+                    </>
+                );
+            }
         },
         {
             accessorKey: 'created_at',
@@ -115,7 +157,13 @@ export default function languagesTable({ languages }: LanguagesTableProps) {
             <Head title="Idiomas"/>
             <Card className="m-2">
                 <CardContent>
-                    <DataTable columns={columns} data={languages} globalFilterPlaceholder="Buscar idioma..."/>
+                    <DataTable
+                        columns={columns}
+                        data={languages}
+                        globalFilterPlaceholder="Buscar idioma..."
+                        onCreateClick={handleCreateLanguage}
+                        
+                    />
                 </CardContent>
             </Card>
         </AppLayout>

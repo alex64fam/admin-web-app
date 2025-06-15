@@ -65,7 +65,7 @@ export function DataTable<TData, TValue>({
 
     return (
         <div className='w-full'>
-            <div className='flex items-center py-4'>
+            <div className='flex items-center gap-1 py-4'>
                 <Input
                     placeholder={globalFilterPlaceholder}
                     value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}
@@ -79,7 +79,7 @@ export function DataTable<TData, TValue>({
                     <Dialog open={isCreateModalOpen} onOpenChange={setIsCreateModalOpen}>
                         <DialogTrigger asChild>
                             <Button variant="outline" onClick={onCreateClick}>
-                                <PlusCircle className='mr-2 h-4 w-4'/>
+                                <PlusCircle className='h-4 w-4'/> Crear
                             </Button>
                         </DialogTrigger>
                         <DialogContent className='sm:max-w-[425px]'>
