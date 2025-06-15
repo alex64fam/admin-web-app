@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('genders', function (Blueprint $table) {
             $table->id();
             $table->string('key'); // Male, Female, Other
+            $table->boolean('is_visible')->default(true)->comment('Visible para los formularios');
             $table->boolean('is_active')->default(true);
             $table->string('description');
             $table->timestamps();

@@ -12,6 +12,7 @@ class Language extends Model
     protected $fillable = [
         'code',
         'name',
+        'is_visible',
         'is_active',
     ];
 }

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('code', 10)->unique();
             $table->string('name')->unique();
+            $table->boolean('is_visible')->default(true)->comment('Si es visible en el formulario de registro');
             $table->boolean('is_active')->default(true);
             $table->timestamps();
         });

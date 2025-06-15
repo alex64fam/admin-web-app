@@ -14,6 +14,7 @@ class Gender extends Model
 
     protected $fillable = [
         'key',
+        'is_visible',
         'is_active',
         'description',
     ];

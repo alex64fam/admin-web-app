@@ -162,8 +162,8 @@ export default function GenderForm({ onClose, gender, activeLanguages }: GenderF
                                 className="w-full"
                                 placeholder={`Nombre del género en ${currentLanguage.name}`}
                             />
-                            {errors[`names.${currentLanguage.code}`] && (
-                                <div className="text-red-500 text-sm">{errors[`names.${currentLanguage.code}`]}</div>
+                            {errors[`names.${currentLanguage.code}` as keyof typeof errors] && (
+                                <div className="text-red-500 text-sm">{errors[`names.${currentLanguage.code}` as keyof typeof errors]}</div>
                             )}
                         </div>
                     )}

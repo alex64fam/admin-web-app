@@ -21,6 +21,7 @@ export interface NavItem {
     icon?: LucideIcon | null;
     isActive?: boolean;
     children?: NavItem[];
+    permission?: string | string[] | null;
 }
 
 export interface SharedData {
@@ -45,6 +46,7 @@ export interface GenderTranslation {
 export interface Gender {
     id: number;
     key: string;
+    is_visible: boolean;
     is_active: boolean;
     name: string;
     description: string;
@@ -54,6 +56,26 @@ export interface Gender {
     [key: string]: unknown; // This allows for additional properties...
 }
 
+export interface Permission {
+    id: number;
+    name: string;
+    guard_name: string;
+    created_at: string;
+    updated_at: string;
+    [key: string]: unknown; // This allows for additional properties...
+}
+
+export interface Role {
+    id: number;
+    name: string;
+    guard_name: string;
+    create_at: string;
+    updated_at: string;
+    permissions?: Permission[];
+    [key: string]: unknown; // This allows for additional properties...
+}
+
+/*
 export interface Role {
     role: string;
     is_active: boolean;
@@ -67,7 +89,7 @@ export interface Role {
         updated_at: string;
     }
     [key: string]: unknown; // This allows for additional properties...
-}
+}*/
 
 export interface User {
     id: number;
@@ -82,10 +104,15 @@ export interface User {
     country?: string;
     zip?: string;
     birthday?: string;
+    latitude?: number;
+    longitude?: number;
     avatar?: string;
     is_active: boolean;
     email_verified_at: string | null;
     roles: Roles[];
+    permissions: Permission[];
+    //roles: string[];
+    //permissions: string[];
     created_at: string;
     updated_at: string;
     [key: string]: unknown; // This allows for additional properties...
@@ -95,6 +122,7 @@ export interface Language {
     id: number;
     code: string;
     name: string;
+    is_visible: boolean;
     is_active: boolean;
     created_at: string;
     updated_at: string;

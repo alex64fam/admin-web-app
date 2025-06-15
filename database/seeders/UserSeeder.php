@@ -27,12 +27,14 @@ class UserSeeder extends Seeder
             'country' => 'México',
             'zip' => '94298',
             'birthdate' => Carbon::parse('1997-01-16'),
+            'latitude' => '19.126815766997282',
+            'longitude' => '-96.11418787451517',
             'gender_id' => Gender::where('key', 'male')->first()->id,
             'is_active' => true,
             'description' => 'Desarrollador de la aplicación.',
             'password' => bcrypt('Mitziwashere97'),
         ]);
 
-        $user->assignRole('root');
+        $user->assignRole(['root']);
     }
 }

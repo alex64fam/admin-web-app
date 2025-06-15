@@ -9,11 +9,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -31,6 +32,8 @@ class User extends Authenticatable
         'country',
         'zip',
         'birthdate',
+        'latitude',
+        'longitude',
         'avatar',
         'gender',
         'is_active',
@@ -61,7 +64,13 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function gender(): BelongsTo
+    {
+        return $this->belongsTo(Gender::class);
+    }
     
+    /*
     public function roles(): BelongsToMany
     {
         return $this->belongsToMany(Role::class);
@@ -70,11 +79,6 @@ class User extends Authenticatable
     public function permissions(): BelongsToMany
     {
         return $this->belongsToMany(Permission::class);
-    }
-
-    public function gender(): BelongsTo
-    {
-        return $this->belongsTo(Gender::class);
     }
 
     public function assignRole(string|Role $role): void
@@ -103,14 +107,10 @@ class User extends Authenticatable
         return $this->roles->whereIn('role', $roles)->isNotEmpty();
     }
 
-    /**
-     * Sincroniza los roles del usuario con una lista dada.
-     * Removerá roles no presentes y añadirá los nuevos.
-     * @param array $roleNames Array de nombres de roles.
-     */
     public function syncRoles(array $roles): void
     {
         $roles = Role::whereIn('role', $roles)->pluck('id');
         $this->roles()->sync($roles);
     }
+    */
 }

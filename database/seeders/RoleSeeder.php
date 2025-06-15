@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Models\Role;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Role;
 
 class RoleSeeder extends Seeder
 {
@@ -14,12 +14,17 @@ class RoleSeeder extends Seeder
     public function run(): void
     {
         // Roles de sistema
-        Role::create(['role' => 'root', 'description' => 'Usuario Root de todo el sistema']);
-        Role::create(['role' => 'admin', 'description' => 'Usuario Administrador de la aplicación']);
+        $role = Role::create(['name' => 'root']);
+        $role->givePermissionTo(['user.view', 'user.create', 'user.edit', 'user.delete']);
+        $role->givePermissionTo(['role.view', 'role.create', 'role.edit', 'role.delete']);
+        $role->givePermissionTo(['permission.view', 'permission.create', 'permission.edit', 'permission.delete']);
+        $role->givePermissionTo(['language.view', 'language.create', 'language.edit', 'language.delete']);
+        $role->givePermissionTo(['gender.view', 'gender.create', 'gender.edit', 'gender.delete']);
+        Role::create(['name' => 'admin']);
         // Roles de aplicación
-        Role::create(['role' => 'basic', 'description' => 'Usuario base de la aplicación']);
-        Role::create(['role' => 'subscription', 'description' => 'Usuario con suscripción de la aplicación']);
-        Role::create(['role' => 'premium', 'description' => 'Usuario premium de la aplicación']);
-        Role::create(['role' => 'vip', 'description' => 'Usuario vip de la aplicación']);
+        Role::create(['name' => 'basic']);
+        Role::create(['name' => 'subscription']);
+        Role::create(['name' => 'premium']);
+        Role::create(['name' => 'vip']);
     }
 }
