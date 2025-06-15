@@ -69,6 +69,8 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
+        $user->assignRole('basic');
+
         event(new Registered($user));
 
         // Crea un token para el usuario recién registrado

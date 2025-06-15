@@ -7,8 +7,11 @@ Route::get('/', function () {
     return Inertia::render('welcome');
 })->name('home');
 
-Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
+Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
     Route::resource('users', App\Http\Controllers\Admin\UserController::class);
+    Route::resource('role', App\Http\Controllers\Admin\RoleController::class);
+    Route::resource('genders', App\Http\Controllers\Admin\GenderController::class);
+    Route::resource('languages', App\Http\Controllers\Admin\LanguageController::class);
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {

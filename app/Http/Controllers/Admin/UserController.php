@@ -14,7 +14,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        $users = User::with('gender', 'roles')->get();
         return Inertia::render('admin/users/index', ['users' => $users]);
     }
 
@@ -61,8 +61,22 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(User $user)
     {
-        //
+        $user->delete();
+        return Inertia::location(route('admin.users.index', [
+            'alert' => [
+                'type' => 'success',
+                'message' => "Usuario $user->name eliminado con éxito.",
+                'title' => 'Usuario eliminado.',
+                'icon' => 'check-circle-2',
+                'color' => 'green',
+                'iconColor' => 'white',
+                'position' => 'top-right',
+                'duration' => '5000',
+                'closeOnClick' => 'true',
+                'pauseOnHover' => 'true',
+            ]
+        ]));
     }
 }
