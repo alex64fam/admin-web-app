@@ -1,6 +1,6 @@
 import { Language } from "@/types";
 import { useForm } from "@inertiajs/react";
-import { useEffect } from "react";
+import { FormEvent, useEffect } from "react";
 
 interface LanguageFormProps {
     onClose: () => void;
@@ -28,4 +28,16 @@ export default function LanguageForm({ onClose, language }: LanguageFormProps) {
             setData('is_active', true);
         }
     }, [language, isEditMode]);
+
+    /*
+    const handleSubmit = (e: FormEvent) {
+        e.preventDefault();
+        
+        const submitMethod = isEditMode ? put : post;
+        const submitRoute = isEditMode ? route('admin.languages.update', language.id) : route('admin.languages.store');
+
+        submitMethod(submitRoute, {
+            onSuccess
+        });
+    }*/
 }
