@@ -40,8 +40,11 @@ class RegisteredUserController extends Controller
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
+            // 'gender_id' => \App\Models\Gender::where('key', 'male')->first()->id,
             'password' => Hash::make($request->password),
         ]);
+
+        $user->assignRole('basic');
 
         event(new Registered($user));
 
