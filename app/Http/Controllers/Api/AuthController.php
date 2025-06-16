@@ -24,6 +24,8 @@ class AuthController extends Controller
                 'id' => $request->user()->id,
                 'name' => $request->user()->name,
                 'email' => $request->user()->email,
+                'username' => $request->user()->username,
+                'gender_id' => $request->user()->gender_id,
             ],
             'token' => $request->user()->createToken('flutter-token')->plainTextToken,
         ]);

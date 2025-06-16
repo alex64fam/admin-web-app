@@ -13,6 +13,28 @@ class PermissionSeeder extends Seeder
      */
     public function run(): void
     {
+        // Admin user permissions
+        Permission::create(['name' => 'admin.view']);
+        // Couple permissions
+        Permission::create(['name' => 'couple.view']);
+        Permission::create(['name' => 'couple.create']);
+        Permission::create(['name' => 'couple.edit']);
+        Permission::create(['name' => 'couple.delete']);
+        // Pet permissions
+        Permission::create(['name' => 'pet.view']);
+        Permission::create(['name' => 'pet.create']);
+        Permission::create(['name' => 'pet.edit']);
+        Permission::create(['name' => 'pet.delete']);
+        // Products permissions
+        Permission::create(['name' => 'product.view']);
+        Permission::create(['name' => 'product.create']);
+        Permission::create(['name' => 'product.edit']);
+        Permission::create(['name' => 'product.delete']);
+        // Clothing permissions
+        Permission::create(['name' => 'clothing.view']);
+        Permission::create(['name' => 'clothing.create']);
+        Permission::create(['name' => 'clothing.edit']);
+        Permission::create(['name' => 'clothing.delete']);
         // User permissions
         Permission::create(['name' => 'user.view']);
         Permission::create(['name' => 'user.create']);

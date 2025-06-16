@@ -15,6 +15,11 @@ class RoleSeeder extends Seeder
     {
         // Roles de sistema
         $role = Role::create(['name' => 'root']);
+        $role->givePermissionTo(['admin.view']);
+        $role->givePermissionTo(['couple.view', 'couple.create', 'couple.edit', 'couple.delete']);
+        $role->givePermissionTo(['pet.view', 'pet.create', 'pet.edit', 'pet.delete']);
+        $role->givePermissionTo(['product.view', 'product.create', 'product.edit', 'product.delete']);
+        $role->givePermissionTo(['clothing.view', 'clothing.create', 'clothing.edit', 'clothing.delete']);
         $role->givePermissionTo(['user.view', 'user.create', 'user.edit', 'user.delete']);
         $role->givePermissionTo(['role.view', 'role.create', 'role.edit', 'role.delete']);
         $role->givePermissionTo(['permission.view', 'permission.create', 'permission.edit', 'permission.delete']);
