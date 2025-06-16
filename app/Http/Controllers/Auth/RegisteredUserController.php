@@ -57,6 +57,7 @@ class RegisteredUserController extends Controller
 
         $user = User::create([
             'name' => $request->name,
+            'username' => $request->username,
             'email' => $request->email,
             'gender_id' => $request->gender_id,
             'language_id' => $request->language_id ?? \App\Models\Language::first()->id, // Si language_id es nulo, usa el primer idioma de la base de datos
