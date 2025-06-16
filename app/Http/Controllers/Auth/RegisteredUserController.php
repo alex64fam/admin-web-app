@@ -85,12 +85,12 @@ class RegisteredUserController extends Controller
     public function storeApi(Request $request): HttpResponse // Usa el alias HttpResponse
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'username' => $request->username,
-            'email' => $request->email,
-            'gender_id' => $request->gender_id,
-            'language_id' => $request->language_id ?? \App\Models\Language::first()->id, // Si language_id es nulo, usa el primer idioma de la base de datos
+            'name' => 'required|string|max:255',
+            'username' => 'required|string|max:255',
+            'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'language_id' => 'nullable|integer|exists:languages,id',
+            'gender_id' => 'required|integer|exists:genders,id',
         ], [
             'name.required' => 'El campo nombre es obligatorio',
             'name.string' => 'El nombre debe ser texto',
