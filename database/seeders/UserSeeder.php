@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Gender;
+use App\Models\Language;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -29,6 +30,7 @@ class UserSeeder extends Seeder
             'birthdate' => Carbon::parse('1997-01-16'),
             'latitude' => '19.126815766997282',
             'longitude' => '-96.11418787451517',
+            'language_id' => Language::first()->id,
             'gender_id' => Gender::where('key', 'male')->first()->id,
             'is_active' => true,
             'description' => 'Desarrollador de la aplicación.',

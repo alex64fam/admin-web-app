@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\GenderController;
+use App\Http\Controllers\Api\LanguageController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -9,13 +10,16 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('v1')->group(function () {
     // Autenticación
     Route::post('/login', [AuthController::class, 'login']);
-    Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
     Route::post('/register', [RegisteredUserController::class, 'storeApi']);
-    Route::get('/gender', [GenderController::class, 'index']);
+    // Catálogos públicos
+    Route::get('/genders', [GenderController::class, 'index']);
+    Route::get('/languages', [LanguageController::class, 'index']);
+
     
     // Rutas protegidas
     Route::middleware('auth:sanctum')->group(function () {
-        Route::get('/user', fn (Request $request) => $request->user());
+        Route::post('/logout', [AuthController::class, 'logout']);
+        Route::get('/users', fn (Request $request) => $request->user());
         // ... más rutas para Flutter
     });
 });

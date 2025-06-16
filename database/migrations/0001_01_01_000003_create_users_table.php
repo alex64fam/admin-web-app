@@ -26,6 +26,8 @@ return new class extends Migration
             $table->date('birthdate')->nullable()->nullable();
             $table->string('latitude')->nullable();
             $table->string('longitude')->nullable();
+            $table->unsignedBigInteger('language_id');
+            $table->foreign('language_id')->references('id')->on('languages');
             $table->string('avatar')->nullable();
             $table->unsignedBigInteger('gender_id')->nullable();
             $table->foreign('gender_id')->references('id')->on('genders');

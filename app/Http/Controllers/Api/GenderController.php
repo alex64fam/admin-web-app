@@ -10,7 +10,7 @@ class GenderController extends Controller
 {
     public function index()
     {
-        $genders = Gender::where('is_active', true)->get();
+        $genders = Gender::where('is_active', true)->where('is_visible', true)->get();
         return response()->json($genders);
     }
 }

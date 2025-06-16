@@ -10,6 +10,9 @@ import { Head, router } from "@inertiajs/react";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MenuSquare } from "lucide-react";
 import { useState } from "react";
+import LanguageCreateForm from "./create";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import LanguageEditForm from "./edit";
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -124,8 +127,7 @@ export default function languagesTable({ languages }: LanguagesTableProps) {
                             <DropdownMenuLabel>Acciones</DropdownMenuLabel>
                             <DropdownMenuItem onClick={() => navigator.clipboard.writeText(language.id.toString())}>Copiar ID</DropdownMenuItem>
                             <DropdownMenuSeparator/>
-                            <DropdownMenuItem>Ver</DropdownMenuItem>
-                            <DropdownMenuItem>Editar</DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => handleEditLanguage(language)}>Editar</DropdownMenuItem>
                             <AlertDialog>
                                 <AlertDialogTrigger asChild>
                                     <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
@@ -162,10 +164,29 @@ export default function languagesTable({ languages }: LanguagesTableProps) {
                         data={languages}
                         globalFilterPlaceholder="Buscar idioma..."
                         onCreateClick={handleCreateLanguage}
-                        
+                        onCreateComponent={(props) =>
+                            <LanguageCreateForm {...props}/>
+                        }
                     />
                 </CardContent>
             </Card>
+
+            <Dialog open={isEditModalOpen} onOpenChange={setIsEditModalOpen}>
+                <DialogContent className="sm:max-w-[425px]">
+                    <DialogHeader>
+                        <DialogTitle>Editar Idioma</DialogTitle>
+                        <DialogDescription>
+                            Modifica los campos del idioma seleccionado
+                        </DialogDescription>
+                    </DialogHeader>
+                    {editingLanguage && (
+                        <LanguageEditForm
+                            onClose={handleCloseEditModal}
+                            language={editingLanguage}
+                        />
+                    )}
+                </DialogContent>
+            </Dialog>
         </AppLayout>
     );
 }

@@ -35,12 +35,31 @@ class RegisteredUserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'language_id' => 'nullable|integer|exists:languages,id',
+            'gender_id' => 'required|integer|exists:genders,id',
+        ], [
+            'name.required' => 'El campo nombre es obligatorio',
+            'name.string' => 'El nombre debe ser texto',
+            'name.max' => 'El nombre no puede tener más de 255 caracteres',
+            'email.required' => 'El campo correo electrónico es obligatorio',
+            'email.string' => 'El correo electrónico debe ser texto',
+            'email.email' => 'El correo electrónico debe ser una dirección válida',
+            'email.max' => 'El correo electrónico no puede tener más de 255 caracteres',
+            'email.unique' => 'Este correo electrónico ya está registrado',
+            'password.required' => 'La contraseña es obligatoria',
+            'password.confirmed' => 'Las contraseñas no coinciden',
+            'language_id.integer' => 'El idioma debe ser un número entero',
+            'language_id.exists' => 'El idioma seleccionado no es válido',
+            'gender_id.required' => 'El género es obligatorio',
+            'gender_id.integer' => 'El género debe ser un número entero',
+            'gender_id.exists' => 'El género seleccionado no es válido',
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            // 'gender_id' => \App\Models\Gender::where('key', 'male')->first()->id,
+            'gender_id' => $request->gender_id,
+            'language_id' => $request->language_id ?? \App\Models\Language::first()->id, // Si language_id es nulo, usa el primer idioma de la base de datos
             'password' => Hash::make($request->password),
         ]);
 
