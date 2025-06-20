@@ -75,7 +75,7 @@ class GenderController extends Controller
         $request->validate($rules);
 
         $gender->update($request->all());
-        
+        dd($gender->all());
         foreach ($request->names as $locale => $name) {
             if ($name !== null) {
                 $gender->translations()->updateOrCreate([

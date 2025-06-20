@@ -12,6 +12,7 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::resource('role', App\Http\Controllers\Admin\RoleController::class);
     Route::resource('genders', App\Http\Controllers\Admin\GenderController::class);
     Route::resource('languages', App\Http\Controllers\Admin\LanguageController::class);
+    Route::resource('roles', App\Http\Controllers\Admin\RoleController::class);
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
