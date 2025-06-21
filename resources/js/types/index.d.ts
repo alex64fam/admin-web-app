@@ -111,6 +111,7 @@ export interface User {
     email_verified_at: string | null;
     roles: Roles[];
     permissions: Permission[];
+    language: Language[];
     //roles: string[];
     //permissions: string[];
     created_at: string;
@@ -126,5 +127,21 @@ export interface Language {
     is_active: boolean;
     created_at: string;
     updated_at: string;
+    [key: string]: unknown; // This allows for additional properties...
+}
+
+export interface RelationshipStatus {
+    id: number;
+    key: string;
+    status: string;
+    description: string;
+    [key: string]: unknown; // This allows for additional properties...
+}
+
+export interface Couple {
+    id: number;
+    user_id_1: User;
+    user_id_2: User;
+    relationship_status: RelationshipStatus;
     [key: string]: unknown; // This allows for additional properties...
 }

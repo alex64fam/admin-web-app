@@ -20,7 +20,7 @@ const checkPermission = (userPermissions: string[] | undefined, requiredPermissi
         return userPermissions.includes(requiredPermissions);
     }
 };
- 
+
 const mainNavItems: NavItem[] = [
     {
         title: 'Dashboard',
