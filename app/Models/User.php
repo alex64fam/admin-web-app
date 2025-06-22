@@ -101,7 +101,7 @@ class User extends Authenticatable
     public function userCouple(): User
     {
         $couple = $this->couplesAsUserOne->merge($this->couplesAsUserTwo)->first()->load(['userOne', 'userTwo']);
-        if ($couple->userOne->id === $this->id) return $couple->userOne;
-        return $couple->userTwo;
+        if ($couple->userOne->id === $this->id) return $couple->userTwo;
+        return $couple->userOne;
     }
 }
