@@ -34,11 +34,11 @@ class CoupleController extends Controller
     // Funcion que recibe un codigo de sincronizacion generado por usuario donde se enlazarán para crear un nuevo registro couple
     public function syncCouple(Request $request)
     {
-        $connectionCode = ConnectionCode::codeActives($request->code);
+        $connectionCode = ConnectionCode::where('code', $request->code)->where('created_at', '>=', now()->subMinutes(15));
         if (!$connectionCode->exists())
             return response()->json([
+                'type' => 'error',
                 'message' => 'El código es incorrecto',
-                'type' => 'error'
             ]);
 
         $couple = Couple::create([
@@ -60,7 +60,7 @@ class CoupleController extends Controller
         $code = null;
         do {
             $code = \Illuminate\Support\Str::upper(\Illuminate\Support\Str::random(8));
-        } while (ConnectionCode::codeActives($code)->exists());
+        } while (ConnectionCode::where('code', $code)->where('created_at', '>=', now()->subMinutes(15))->exists());
         ConnectionCode::create([
             'user_id' => $request->user_id,
             'code' => $code
