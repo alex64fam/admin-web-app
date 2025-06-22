@@ -37,7 +37,7 @@ class CoupleController extends Controller
 
         $couple = Couple::create([
             'user_id_1' => $connectionCode->first()->user_id,
-            'user_id_2' => $request->user_id,
+            'user_id_2' => auth()->user()->id,
             'relationship_status_id' => 1
         ]);
 
@@ -56,7 +56,7 @@ class CoupleController extends Controller
             $code = \Illuminate\Support\Str::upper(\Illuminate\Support\Str::random(8));
         } while (ConnectionCode::where('code', $code)->where('created_at', '>=', now()->subMinutes(15))->exists());
         ConnectionCode::create([
-            'user_id' => $request->user_id,
+            'user_id' => auth()->user()->id,
             'code' => $code
         ]);
 
