@@ -92,7 +92,7 @@ class User extends Authenticatable
         return $this->couplesAsUserOne->merge($this->couplesAsUserTwo);
     }
 
-    public function couple(): Couple
+    public function couple(): Couple | null
     {
         return $this->couplesAsUserOne->merge($this->couplesAsUserTwo)->first();
     }
@@ -100,7 +100,7 @@ class User extends Authenticatable
     // Devuelve el usuario de la pareja
     public function userCouple(): User
     {
-        $couple = $this->couplesAsUserOne->merge($this->couplesAsUserTwo)->first()->load(['userOne', 'userTwo', 'relationshipStatus']);
+        $couple = $this->couplesAsUserOne->merge($this->couplesAsUserTwo)->first()->load(['userOne', 'userTwo']);
         if ($couple->userOne->id === $this->id) return $couple->userOne;
         return $couple->userTwo;
     }

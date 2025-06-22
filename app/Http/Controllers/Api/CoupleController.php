@@ -12,7 +12,17 @@ class CoupleController extends Controller
 {
     public function verifyCouple(Request $request)
     {
-        if (User::couple())
+        $user = User::find($request->user_id);
+        if ($user->couples()->count() > 0)
+            return response()->json([
+                'type' => 'success',
+                'couple' => $user->userCouple()
+            ]);
+        return response()->json([
+            'type' => 'error',
+            'message' => 'No tienes una relación',
+            'couple' => null
+        ]);
     }
 
     // Funcion que recibe un codigo de sincronizacion generado por usuario donde se enlazarán para crear un nuevo registro couple
