@@ -72,7 +72,7 @@ class CoupleController extends Controller
     public function unSyncCouple(Request $request)
     {
         $user = auth()->user();
-        $user->couples()->delete();
+        $user->couple()->delete();
         return response()->json([
             'message' => 'Desconectaste con tu pareja',
             'type' => 'success'
