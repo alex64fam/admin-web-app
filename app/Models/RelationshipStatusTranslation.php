@@ -10,7 +10,7 @@ class RelationshipStatusTranslation extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['relationship_status_id', 'locate', 'name'];
+    protected $fillable = ['relationship_status_id', 'locale', 'name'];
 
     public function relationshipStatus(): BelongsTo
     {

@@ -13,12 +13,15 @@ return new class extends Migration
     {
         Schema::create('couples', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id_1');
+            $table->foreignId('user_id_1')->constrained('users')->onDelete('cascade');
+            $table->foreignId('user_id_2')->constrained('users')->onDelete('cascade');
+            $table->foreignId('relationship_status_id')->constrained('relationship_statuses')->onDelete('cascade');
+            /*$table->unsignedBigInteger('user_id_1');
             $table->foreign('user_id_1')->references('id')->on('users');
             $table->unsignedBigInteger('user_id_2');
             $table->foreign('user_id_2')->references('id')->on('users');
             $table->unsignedBigInteger('relationship_status_id');
-            $table->foreign('relationship_status_id')->references('id')->on('relationship_statuses');
+            $table->foreign('relationship_status_id')->references('id')->on('relationship_statuses');*/
             $table->timestamps();
         });
     }

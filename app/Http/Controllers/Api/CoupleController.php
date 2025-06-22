@@ -5,10 +5,16 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\ConnectionCode;
 use App\Models\Couple;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class CoupleController extends Controller
 {
+    public function verifyCouple(Request $request)
+    {
+        if (User::couple())
+    }
+
     // Funcion que recibe un codigo de sincronizacion generado por usuario donde se enlazarán para crear un nuevo registro couple
     public function syncCouple(Request $request)
     {
@@ -18,7 +24,7 @@ class CoupleController extends Controller
                 'message' => 'El código es incorrecto',
                 'type' => 'error'
             ]);
-        
+
         $couple = Couple::create([
             'user_id_1' => $connectionCode->first()->user_id,
             'user_id_2' => $request->user_id,
@@ -26,7 +32,7 @@ class CoupleController extends Controller
         ]);
 
         $connectionCode->delete();
-        
+
         return response()->json([
             'message' => 'Conectaste con tu pareja ' . $couple->user_id_2,
             'type' => 'success'

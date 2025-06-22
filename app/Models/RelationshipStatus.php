@@ -13,7 +13,7 @@ class RelationshipStatus extends Model
 
     protected $fillable = [
         'key',
-        'status',
+        'is_active',
         'description',
     ];
 

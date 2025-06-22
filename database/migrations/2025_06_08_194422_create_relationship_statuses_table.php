@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('relationship_statuses', function (Blueprint $table) {
             $table->id();
             $table->string('key')->unique();
-            $table->string('status');
+            $table->boolean('is_active');
             $table->string('description');
             $table->timestamps();
         });

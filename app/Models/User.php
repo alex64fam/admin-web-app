@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -70,9 +71,37 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Gender::class);
     }
-    
+
     public function languages(): BelongsTo
     {
         return $this->belongsTo(Language::class);
+    }
+
+    public function couplesAsUserOne(): HasMany
+    {
+        return $this->hasMany(Couple::class, 'user_id_1');
+    }
+
+    public function couplesAsUserTwo(): HasMany
+    {
+        return $this->hasMany(Couple::class, 'user_id_2');
+    }
+
+    public function couples()
+    {
+        return $this->couplesAsUserOne->merge($this->couplesAsUserTwo);
+    }
+
+    public function couple(): Couple
+    {
+        return $this->couplesAsUserOne->merge($this->couplesAsUserTwo)->first();
+    }
+
+    // Devuelve el usuario de la pareja
+    public function userCouple(): User
+    {
+        $couple = $this->couplesAsUserOne->merge($this->couplesAsUserTwo)->first()->load(['userOne', 'userTwo', 'relationshipStatus']);
+        if ($couple->userOne->id === $this->id) return $couple->userOne;
+        return $couple->userTwo;
     }
 }

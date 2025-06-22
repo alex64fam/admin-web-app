@@ -16,14 +16,16 @@ Route::prefix('v1')->group(function () {
     Route::get('/genders', [GenderController::class, 'index']);
     Route::get('/languages', [LanguageController::class, 'index']);
 
-    
+
     // Rutas protegidas
     Route::middleware('auth:sanctum')->group(function () {
         Route::post('/logout', [AuthController::class, 'logout']);
         Route::get('/users', fn (Request $request) => $request->user());
         // ... más rutas para Flutter
         Route::prefix('couple')->name('couple.')->group(function () {
-            Route::post('/sync', [CoupleController::class, 'sync']);
+            Route::get('/verifyCouple', [CoupleController::class], 'verifyCouple');
+            Route::post('/syncCouple', [CoupleController::class, 'syncCouple']);
+            Route::post('/generateCode', [CoupleController::class, 'generateCode']);
         });
     });
 });
