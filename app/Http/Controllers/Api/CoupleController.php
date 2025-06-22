@@ -12,7 +12,7 @@ class CoupleController extends Controller
 {
     public function verifyCouple(Request $request)
     {
-        $user = auth()->user;
+        $user = auth()->user();
         if ($user->couples()->count() > 0)
             return response()->json([
                 'type' => 'success',
