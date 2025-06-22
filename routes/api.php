@@ -26,6 +26,7 @@ Route::prefix('v1')->group(function () {
             Route::get('/verifyCouple', [CoupleController::class, 'verifyCouple']);
             Route::post('/syncCouple', [CoupleController::class, 'syncCouple']);
             Route::post('/generateCode', [CoupleController::class, 'generateCode']);
+            Route::post('/unSyncCouple', [CoupleController::class, 'unSyncCouple']);
         });
     });
 });
