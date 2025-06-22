@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Couple;
+use Exception;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class CoupleController extends Controller
 {
@@ -12,15 +15,8 @@ class CoupleController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        $couples = Couple::all();
+        return Inertia::render('admin/couples/index', ['couples' => $couples]);
     }
 
     /**
@@ -34,7 +30,7 @@ class CoupleController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Couple $couple)
     {
         //
     }
@@ -50,7 +46,7 @@ class CoupleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Couple $couple)
     {
         //
     }
@@ -58,8 +54,13 @@ class CoupleController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Couple $couple)
     {
-        //
+        try {
+            $couple->delete();
+            return redirect()->route('admin.couples.index')->with('success', 'Pareja eliminada con éxito');
+        } catch (Exception $e) {
+
+        }
     }
 }

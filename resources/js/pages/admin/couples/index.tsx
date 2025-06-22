@@ -1,4 +1,4 @@
-import { BreadcrumbItem } from "@/types";
+import { BreadcrumbItem, Couple } from "@/types";
 
 const breadcrumbs: BreadcrumbItem[] = [
     {

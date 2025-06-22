@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\CoupleController;
 use App\Http\Controllers\Api\GenderController;
 use App\Http\Controllers\Api\LanguageController;
 use App\Http\Controllers\Auth\RegisteredUserController;
@@ -21,5 +22,8 @@ Route::prefix('v1')->group(function () {
         Route::post('/logout', [AuthController::class, 'logout']);
         Route::get('/users', fn (Request $request) => $request->user());
         // ... más rutas para Flutter
+        Route::prefix('couple')->name('couple.')->group(function () {
+            Route::post('/sync', [CoupleController::class, 'sync']);
+        });
     });
 });
