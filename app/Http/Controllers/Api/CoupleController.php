@@ -12,6 +12,12 @@ class CoupleController extends Controller
 {
     public function verifyCouple(Request $request)
     {
+        if (!$request->has('user_id'))
+            return response()->json([
+                'type' => 'error',
+                'message' => 'No se ha enviado el usuario',
+                'couple' => null
+            ]);
         $user = User::find($request->user_id);
         if ($user->couples()->count() > 0)
             return response()->json([
