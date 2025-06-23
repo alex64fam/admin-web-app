@@ -55,14 +55,15 @@ class CoupleController extends Controller
         do {
             $code = \Illuminate\Support\Str::upper(\Illuminate\Support\Str::random(8));
         } while (ConnectionCode::where('code', $code)->where('created_at', '>=', now()->subMinutes(15))->exists());
-        ConnectionCode::create([
+        $connectionCode = ConnectionCode::create([
             'user_id' => auth()->user()->id,
             'code' => $code
         ]);
 
         return response()->json([
             'data' => [
-                'code' => $code
+                'code' => $connectionCode->code,
+                'created_at' => $connectionCode->created_at
             ],
             'message' => 'Código generado con éxito',
             'type' => 'success'
