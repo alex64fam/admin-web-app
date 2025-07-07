@@ -24,6 +24,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'last_name',
         'username',
         'email',
         'phone',
@@ -103,5 +104,10 @@ class User extends Authenticatable
         $couple = $this->couplesAsUserOne->merge($this->couplesAsUserTwo)->first()->load(['userOne', 'userTwo']);
         if ($couple->userOne->id === $this->id) return $couple->userTwo;
         return $couple->userOne;
+    }
+
+    public function getFullNameAttribute(): String
+    {
+        return $this->name . ' ' . $this->last_name;
     }
 }

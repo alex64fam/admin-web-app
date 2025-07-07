@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\UserPaired;
 use App\Http\Controllers\Controller;
 use App\Models\ConnectionCode;
 use App\Models\Couple;
@@ -42,6 +43,9 @@ class CoupleController extends Controller
         ]);
 
         $connectionCode->delete();
+
+        event(new UserPaired($couple->user_id_1, 'Tu parejita ' . auth()->user()->)); // Evento que avisa al usuario 1 que ya fue encontrado y sincronizado
+        event(new UserPaired($couple->user_id_2)); // Evento que avisa al usuario 2 que ya encontró al otro usuario
 
         return response()->json([
             'message' => 'Conectaste con tu pareja ' . $couple->user_id_2,
