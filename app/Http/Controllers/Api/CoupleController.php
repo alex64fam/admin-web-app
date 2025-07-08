@@ -17,7 +17,7 @@ class CoupleController extends Controller
         if ($user->couples()->count() > 0)
             return response()->json([
                 'type' => 'success',
-                'couple' => $user->userCouple()
+                'couple' => $user->userCouple()->toArray()
             ]);
         return response()->json([
             'type' => 'error',
