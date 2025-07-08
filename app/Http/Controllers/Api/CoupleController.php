@@ -17,7 +17,7 @@ class CoupleController extends Controller
         if ($user->couples()->count() > 0)
             return response()->json([
                 'type' => 'success',
-                //'couple' => $user->userCouple()->toArray()
+                'couple' => $user->userCouple()
             ]);
         return response()->json([
             'type' => 'error',
@@ -44,7 +44,7 @@ class CoupleController extends Controller
 
         $connectionCode->delete();
 
-        event(new UserPaired($couple->user_id_1, 'Tu parejita ' . auth()->user()->)); // Evento que avisa al usuario 1 que ya fue encontrado y sincronizado
+        event(new UserPaired($couple->user_id_1)); // Evento que avisa al usuario 1 que ya fue encontrado y sincronizado
         event(new UserPaired($couple->user_id_2)); // Evento que avisa al usuario 2 que ya encontró al otro usuario
 
         return response()->json([
