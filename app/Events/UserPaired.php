@@ -46,7 +46,8 @@ class UserPaired
     public function broadcastWith(): array
     {
         return [
-            'user_id' => $this->userId
+            'user_id' => $this->userId,
+            'message' => $this->message,
         ];
     }
 }
